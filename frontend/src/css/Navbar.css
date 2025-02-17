@@ -1,0 +1,93 @@
+.navbar {
+    background-color: #121212; /* Bootstrap primary color */
+    color: white;
+    padding: 10px 20px;
+    height: 30px;
+    font-family: 'Arial', sans-serif;
+    top: 0;
+    font-size: 18px;
+    position: sticky;
+    box-shadow: 2px 3px 5px rgba(255, 255, 255, 0.3);
+}
+
+
+.market-time{
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 250px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    right: 200px;
+    position: absolute;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .profile{
+    position: absolute;
+    right: 30px;
+    margin-top: -5px;
+}
+
+.navbar li{
+    line-height: 30px;
+}
+
+.navbar a,.navbar button {
+    font-size: 16px;
+        color: white;
+        text-decoration: none;
+        padding: 5px 20px;
+        border: none;
+        background: none;
+        cursor: pointer;
+}
+
+.navbar a:hover, .navbar button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search{
+    text-transform: uppercase;
+    width: 200px;
+    height: 25px;
+    position: absolute;
+    border-radius: 3px;
+    border: 1px solid white;
+    padding: 2px 20px;
+    margin-left: 500px;
+    font-weight: 600;
+    background-color: #474747;
+    color: #fff;
+}
+
+.navbar .btn-search{
+    height: 25px;
+    position: absolute;
+    border-radius: 3px;
+    border: 1px solid white;
+    padding: 2px 10px;
+    margin-top: 3px;
+    margin-left: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    color: rgb(99, 99, 99);
+}
+
+.navbar .logo{
+    width: 45px;
+    border-radius: 2px;
+    position: absolute;
+}
+
+.navbar .name{
+    width: fit-content;
+    position: absolute;
+    margin-top: 5px;
+    font-size: 18px;
+    margin-left: 60px;
+}

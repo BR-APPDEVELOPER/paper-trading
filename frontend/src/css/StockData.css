@@ -1,0 +1,242 @@
+ /* .stock-data h2 {
+    margin: 0 0 20px;
+    font-size: 1.8em;
+    
+}
+.stock-data p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.stock-data button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.stock-deatils{
+    display: flex;
+    
+}
+.stock-details {
+    display: flex;
+    gap: 10px; 
+}
+
+
+.stock-data button:hover {
+    background-color: #218838;
+}
+
+.stock-details p {
+    background: #f0f0f0; 
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.buy-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.sell-btn {
+    background: #f44336;
+    color: white;
+} */
+
+ /* Container for the stock data */
+ body{
+    background-color: #121212 ;
+  }
+
+ .stock-container {
+     /* background-color: rgb(241, 237, 237); */
+     background-color: #1E1E1E;
+     border-radius: 16px;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+     padding: 24px;
+     border: 1px solid #B0B0B0;
+     width: 100%;
+     font-family: "Arial", sans-serif;
+     color: #333;
+ }
+
+ /* Header section */
+ .stock-header {
+     text-align: center;
+     margin-bottom: 20px;
+ }
+
+ .stock-header h1 {
+     font-size: 28px;
+     font-weight: bold;
+     margin: 0;
+     color: #fff;
+ }
+
+ .stock-header h2 {
+     font-size: 18px;
+     color: #7f8c8d;
+     margin: 0;
+ }
+
+
+
+ /* Price section */
+ .stock-price {
+     text-align: center;
+     margin-bottom: 20px;
+ }
+
+ .stock-price .price {
+     font-size: 36px;
+     font-weight: bold;
+     color: #27ae60;
+ }
+
+ .stock-price .change {
+     font-size: 18px;
+     margin-left: 10px;
+ }
+
+ .stock-price .positive{
+    color: #27ae60;
+ }
+
+ .stock-price .negative{
+    color: #f23645;
+ }
+
+ /* Stock info grid */
+ .stock-info {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 16px;
+ }
+
+ .info-item {
+     background: #474747;
+     padding: 10px;
+     font-size: 18px;
+     border-radius: 8px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     text-align: center;
+ }
+
+ .info-item .label {
+     font-size: 14px;
+     color: rgb(180, 180, 180);
+     display: block;
+     font-size: 16px;
+     margin-bottom: 4px;
+ }
+
+ .info-item .value {
+     font-size: 18px;
+     font-weight: bold;
+     color: white;
+     
+ }
+
+ .order-group {
+     display: flex;
+     justify-content: center;
+     gap: 10px;
+     margin-top: 15px;
+ }
+
+ .buy-btn {
+     background: #089981;
+     color: white;
+ }
+
+ .sell-btn {
+     background: #f23645;
+     color: white;
+ }
+
+ .market-details {
+     width: fit-content;
+     font-size: 18px;
+     display: flex;
+     gap: 10px;
+ }
+
+ .btn-watchlist {
+    font-size: 18px;
+    margin-left: 660px;
+    background-color: #474747;
+    color: white;
+    padding: 2px 5px;
+    cursor: pointer;
+    border: 1px solid #474747;
+    box-shadow: 0 2px 4px rgb(134, 134, 134);
+}
+
+.btn-watchlist:hover{
+    background-color: #757575;
+}
+
+ .market-details span {
+     background-color: #474747;;
+     padding: 3px 10px;
+     border-radius: 3px;
+     color: white;
+     justify-content: center;
+ }
+
+ .place-order {
+     border-bottom: 1px solid #7f8c8d7a;
+     width: fit-content;
+     margin: 0 auto;
+     color: white;
+     margin-top: 20px;
+
+ }
+
+ .order-group input {
+     width: 210px;
+     height: 30px;
+     font-size: 15px;
+     background-color: #474747;
+     padding-left: 10px;
+     border-radius: 3px;
+     border: 1px solid white;
+     color: #FFFFFF;
+ }
+
+ .order-group .amount {
+     display: grid;
+     color: white;
+ }
+
+ .order-group button {
+     width: 150px;
+     height: 33px;
+     font-size: 17px;
+     border-radius: 5px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     border: 1px solid;
+     cursor: pointer;
+ }
+
+ .order-group .buy-btn:hover {
+    background-color: #068a74;
+}
+
+.order-group .sell-btn:hover {
+    background-color: #fd2032;
+}
