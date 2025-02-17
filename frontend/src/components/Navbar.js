@@ -3,6 +3,7 @@ import '../css/Navbar.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import logo from '../images/logo.jpg'
 
 const Navbar = ({ onSearch }) => {
     const [search, setSearch] = useState([]);
@@ -51,7 +52,8 @@ const Navbar = ({ onSearch }) => {
 
     return (
         <nav className="navbar">
-            <img className='logo' src='https://static.vecteezy.com/system/resources/thumbnails/000/609/739/small/3-19.jpg' alt='Logo'></img>
+            
+            <img className='logo' src={logo} alt='Logo'></img>
             <label className='name'>Paper Trading</label>
             <input type='text' className='search' placeholder='Search' value={search} onChange={(e)=>setSearch(e.target.value)}></input>
             <button className='btn-search' onClick={handleSearch}>Search</button>
