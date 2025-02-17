@@ -47,6 +47,11 @@ app.use('/api', userRoutes);
 app.use('/api/watchlist', watchlistRoutes);
 app.use('/api/position', positionRoutes);
 
+//for backend working test
+app.get('/', (req, res)=>{
+    res.send("<h1>Hello world</h1>");
+});
+
 const server = http.createServer(app);
 const io = socketIo(server, { cors: { origin: '*' } });
 
