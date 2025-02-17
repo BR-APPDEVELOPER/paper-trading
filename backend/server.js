@@ -49,7 +49,7 @@ app.use('/api/position', positionRoutes);
 
 //for backend working test
 app.get('/', (req, res)=>{
-    res.send("<h1>Hello world</h1>");
+    res.send("<h1>Paper Trading. Your server is Live</h1>");
 });
 
 const server = http.createServer(app);
