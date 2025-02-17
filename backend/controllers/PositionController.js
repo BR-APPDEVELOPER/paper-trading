@@ -35,7 +35,7 @@ const sell = async (req, res) => {
         const position = await Position.findOne({ userId, stockSymbol, status: 'executed' });
         
         if (!position) {
-            return res.json({ message: 'No purchased stock found to sell' });
+            return res.json({ message: 'No executed stock found to sell' });
         }
 
         if (sellPrice <= marketPrice) {

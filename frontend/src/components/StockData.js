@@ -69,7 +69,7 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/position/buy', {
+            const response = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/position/buy`, {
                 userId: user._id,
                 stockSymbol: newSymbol || defaultSymbol,
                 buyPrice: Number(buyPrice),
@@ -92,7 +92,7 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
 
     const handleSell = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/position/sell', {
+            const response = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/position/sell`, {
                 userId: user._id, // Replace with actual user ID
                 stockSymbol: newSymbol || defaultSymbol,
                 sellPrice: Number(buyPrice),

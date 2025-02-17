@@ -3,7 +3,7 @@ import '../css/positions.css';
 import axios from 'axios';
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // Replace with your server URL
+const socket = io(process.env.REACT_APP_WEB_URL); // Replace with your server URL
 
 const Positions = ({ title, selectedStock, getPositions, positions }) => {
     //const [positions, setPositions] = useState([]);
@@ -63,7 +63,7 @@ const Positions = ({ title, selectedStock, getPositions, positions }) => {
     const handleSell = async (symbol) => {
         try {
             console.log("3", symbol);
-            const response = await axios.post('http://localhost:5000/api/position/sell', {
+            const response = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/position/sell`, {
                 userId: user._id, // Replace with actual user ID
                 stockSymbol: symbol,
                 sellPrice: Number(data.regularMarketPrice),
