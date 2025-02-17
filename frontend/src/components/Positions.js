@@ -91,7 +91,7 @@ const Positions = ({ title, selectedStock, getPositions, positions }) => {
                 // Wait for a short delay to ensure data updates
                 await new Promise(resolve => setTimeout(resolve, 500));
 
-                if(data.length !== 0){
+                if (data.length !== 0) {
                     break;
                 }
 
@@ -100,7 +100,7 @@ const Positions = ({ title, selectedStock, getPositions, positions }) => {
                     return;
                 }
 
-                c=c+1;
+                c = c + 1;
 
             } while (true); // This ensures we exit the loop when data is valid
 
@@ -140,12 +140,15 @@ const Positions = ({ title, selectedStock, getPositions, positions }) => {
                     <>
                         {
                             positions.map((position, index) => (
-                                    <div key={index} className={position.status === 'executed' ? "position-item executed-color" : "position-item pending-color"} onClick={() => selectedStock(position.stockSymbol)}>
-                                    
-                                    {position.stockSymbol}
-                                    <label className='status'>{position.status}</label>
+                                <div key={index} className={position.status === 'executed' ? "position-item executed-color" : "position-item pending-color"} onClick={() => selectedStock(position.stockSymbol)}>
+
+                                    <label className='position-symbol'>{position.stockSymbol}</label>
+                                    <div className='details'>
+                                        <label className='status'>{position.status}</label>
+                                        <label className='buy-price'>B:{position.buyPrice}</label>
+                                    </div>
                                     <button className={position.status === 'executed' ? "btn-executed-color" : "btn-pending-color"} onClick={() => cancelOrder(position._id, position.buyPrice, position.quantity, position.status, position.stockSymbol)}> {position.status === 'executed' ? "Sell" : "Cancel"}</button>
-                                    
+
                                 </div>
                             ))
                         }

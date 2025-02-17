@@ -2,6 +2,8 @@
     border: 1px solid #B0B0B0;
     border-radius: 8px;
     height: 38vh;
+    width: 300px;
+    max-width: 300px;
     font-family: "Arial", sans-serif;
     color: #E0E0E0;
     background-color: #1E1E1E;
@@ -31,15 +33,32 @@
     border-bottom: 1px solid #bdbdbd9a;
     cursor: pointer;
     padding-left: 10px;
+    padding-top: 10px;
     border-radius: 4px;
 }
 
+.position-item .position-symbol{
+    max-width: 120;
+}
+
+.position-item .details{
+    position: absolute;
+    top: 2px;
+    gap: 5px;
+    display: flex;    
+}
+
 .position-item .status{
-    top: 0;
-    background-color: #333333;
+    background-color: #33333377;
     padding: 1px 5px;
-    margin-left: 10px;
-    border-radius: 4px;
+    border: 1px solid #555555;
+    font-size: 12px;
+}
+
+.position-item .buy-price{
+    top: 0;
+    background-color: #33333377;
+    padding: 1px 5px;
     border: 1px solid #555555;
     font-size: 12px;
 }
