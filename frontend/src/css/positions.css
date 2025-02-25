@@ -1,7 +1,7 @@
 .positions {
     border: 1px solid #B0B0B0;
     border-radius: 8px;
-    height: 38vh;
+    height: 89.7vh;
     width: 300px;
     max-width: 300px;
     font-family: "Arial", sans-serif;
@@ -9,11 +9,13 @@
     background-color: #1E1E1E;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.positions-data{
+
+.positions-data {
     overflow-y: scroll;
-    height: 28.5vh;
+    height: 89vh;
     padding: 5px;
 }
+
 .positions h2 {
     margin: 0 5px 0px 5px;
     font-size: 20px;
@@ -28,61 +30,70 @@
     display: flex;
     align-items: center;
     margin-top: 5px;
+    margin-bottom: 10px;
     height: 50px;
     position: relative;
-    border-bottom: 1px solid #bdbdbd9a;
-    cursor: pointer;
+    border: 1px solid #bdbdbd9a;
     padding-left: 10px;
     padding-top: 10px;
     border-radius: 4px;
+    box-shadow: 0 2px 3px rgba(117, 117, 117, 0.781);
 }
 
-.position-item .position-symbol{
-    max-width: 120;
+.position-item .position-symbol {
+    width: 140px;
+    cursor: pointer;
+    overflow: hidden;
 }
 
-.position-item .details{
+.position-item .details {
     position: absolute;
     top: 2px;
     gap: 5px;
-    display: flex;    
+    right: 0px;
+    left: 2px;
+    display: flex;
+    width: 100%;
 }
 
-.position-item .status{
-    background-color: #33333377;
+.details .edit-price {
+    position: absolute;
+    right: 5px;
+    width: 20px;
+}
+
+.position-item .status {
+    background-color: #333333e3;
     padding: 1px 5px;
-    border: 1px solid #555555;
     font-size: 12px;
 }
 
-.position-item .buy-price{
+.position-item .buy-price, .buy-qty{
     top: 0;
-    background-color: #33333377;
+    background-color: #333333e3;
     padding: 1px 5px;
-    border: 1px solid #555555;
     font-size: 12px;
 }
 
-.executed-color{
+.position-item .edit-price:hover {
+    background-color: #068a74;
+}
+
+/* .executed-color {
     background: #0899812f;
 }
 
-.pending-color{
+.pending-color {
     background: #fa2f4038;
-}
+} */
 
-.btn-executed-color{
+.btn-executed-color {
     background: #089981;
 }
 
-.btn-pending-color{
+.btn-pending-color {
     background: #333333;
 }
-
-.position-item:hover{
-    background-color: rgba(226, 226, 226, 0.589);
-}
-
 
 .position-item button {
     color: white;
@@ -103,4 +114,87 @@
 
 .position-item .btn-executed-color:hover {
     background-color: #068a74;
+}
+
+
+/* ModifyAMount.js */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    font-family: "Arial", sans-serif;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog {
+    background: white;
+    padding: 20px;
+    border-radius: 2px;
+    width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dialog h2{
+    color: black;
+    text-align: center;
+}
+
+.dialog label:first-of-type{
+    color: black;
+    margin-top: 10px;
+    display: flex;
+    font-size: 18px;
+    margin-bottom: 3px;
+    
+}
+
+.dialog label:last-of-type{
+    color: black;
+    display: flex;
+    font-size: 18px;
+    margin-bottom: 3px;
+    
+}
+
+.dialog input {
+    width: 94%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    outline: none;
+    font-size: 15px;
+}
+
+.dialog input:focus{
+    border: 2px solid #333333;
+}
+
+.dialog .buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog button {
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 2px;
+}
+
+.dialog button:first-child {
+    
+    color: white;
+    background: #f23645;
+}
+
+.dialog button:last-child {
+    background: #089981;
+    color: white;
 }

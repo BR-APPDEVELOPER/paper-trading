@@ -41,7 +41,7 @@ const Watchlist = ({ title, selectedStock, getWatchlist, watchlists}) => {
                 <>
                     {watchlists.stocks.map((stockSymbol, index) => (
                         <div key={index} className="stock-item" onClick={() => selectedStock(stockSymbol)}>
-                            {stockSymbol} <button onClick={() => removeFromWatchlist(stockSymbol)}>Remove</button>
+                            {stockSymbol.toUpperCase()} <button onClick={() => removeFromWatchlist(stockSymbol)}>Remove</button>
                         </div>
                     ))}
                 </>

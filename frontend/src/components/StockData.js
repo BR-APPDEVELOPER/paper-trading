@@ -2,18 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import '../css/StockData.css';
 
-const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
+const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
     const [data, setSymbolData] = useState([]);
     const [chartData, setChartData] = useState([]);
     const [symbol, setNewSymbol] = useState();
-    const [buyPrice, setBuyPrice] = useState();
-    const [quantity, setQuantity] = useState();
+    const [buyPrice, setBuyPrice] = useState("");
+    const [quantity, setQuantity] = useState("");
     const [requiredAmount, setRequiredAmount] = useState();
     const [priceChange, setPriceChange] = useState();
     const [percentageChange, setPercentageChange] = useState();
     const user = JSON.parse(sessionStorage.getItem("user"));
 
     async function calculateRequiredAmount(e) {
+        
         const qty = Number(e.target.value); // Ensure it's a number
         setQuantity(qty);
 
@@ -24,11 +25,11 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
     // ✅ Add Stock to Watchlist
     async function addToWatchlist() {
         try {
-            console.log("d", newSymbol || defaultSymbol, "ddd");
-
             const res = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/watchlist/add`, {
                 userId: user._id,
+                //stockSymbol: symbol
                 stockSymbol: newSymbol || defaultSymbol
+                
             });
 
             if (res.data.success) {
@@ -62,9 +63,14 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
 
         }
     }
+
+
     const handleBuy = async () => {
         if(user.balance < requiredAmount){
             alert("Warning: Your current balance is below the required amount.");
+            return;
+        } else if(buyPrice === "" || quantity === ""  || buyPrice === 0 || quantity === 0){
+            alert("Warning: All fields are required.");
             return;
         }
 
@@ -80,17 +86,25 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
             if (response.data.success) {
                 alert(response.data.message);
                 updateBalance();
+                getPositions();
                 user.balance = user.balance - requiredAmount;
                 sessionStorage.setItem("user", JSON.stringify(user));
                 setBuyPrice('');
                 setQuantity('');
+                setRequiredAmount(0);
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error.message);
         }
     };
 
     const handleSell = async () => {
+
+        if(buyPrice === "" || quantity === ""  || buyPrice === 0 || quantity === 0){
+            alert("Warning: All fields are required.");
+            return;
+        }
+
         try {
             const response = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/position/sell`, {
                 userId: user._id, // Replace with actual user ID
@@ -98,17 +112,35 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
                 sellPrice: Number(buyPrice),
                 marketPrice: Number(data.regularMarketPrice)
             });
+            
+            if(response.data.success && response.data.user){
+                getPositions();
+                user.balance = response.data.user?.balance;
+                sessionStorage.setItem("user", JSON.stringify(user));
+                alert(response.data.message);
+                setBuyPrice('');
+                setQuantity('');
 
-            alert(response.data.message);
-            setBuyPrice('');
+            }else if(response.data.success && !response.data.user){
+                getPositions();
+                alert(response.data.message);
+                setBuyPrice('');
+                setQuantity('');
+            } else{
+                alert(response.data.message);
+            }
+            
+            
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error.message);
         }
     };
 
     useEffect(() => {
         const symbolToFetch = newSymbol || defaultSymbol; // Use newSymbol if available, otherwise defaultSymbol
         setNewSymbol(symbolToFetch);
+        console.log(newSymbol, "s:", defaultSymbol);
+        
 
         const fetchStockData = async () => {
             if (!symbolToFetch) return; // Avoid fetching if no symbol is available
@@ -239,11 +271,10 @@ const StockData = ({ newSymbol, defaultSymbol, getWatchlist}) => {
 
                 <button className="buy-btn" onClick={handleBuy}>Buy</button>
                 <button className="sell-btn" onClick={() => handleSell()}>Sell</button>
-
-                <div className='amount'>
-                    <span>Margin Avail: {user.balance}</span>
+            </div>
+            <div className='amount'>
+                    <span>Margin Avail: {user.balance.toFixed(2)}</span>
                     <span>Req: {requiredAmount || 0}</span>
-                </div>
             </div>
             {/* <Chart /> */}
         </div>

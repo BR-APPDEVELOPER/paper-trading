@@ -8,7 +8,7 @@ const axios = require('axios');
 
 dotenv.config();
 const connectDB = require('./config/db');
-const Position = require('./models/Position');
+const {BuyPosition, SellPosition} = require('./models/Position');
 const History = require('./models/History');
 const User = require('./models/user');
 const userRoutes = require('./routes/userRoutes');
@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
     console.log('New client connected');
     setInterval(async () => {
         try {
-            const positions = await Position.distinct('stockSymbol'); // Fetch both stockSymbol and _id
+            const positions = await BuyPosition.distinct('stockSymbol');
 
 
             for (const stockSymbol of positions) {
@@ -63,7 +63,7 @@ io.on('connection', (socket) => {
                 }
 
                 // ✅ Auto-Buy if price matches
-                const buyOrders = await Position.find({ stockSymbol, status: 'pending' });
+                const buyOrders = await BuyPosition.find({stockSymbol, status: 'pending'}); //type 'buy'
                 
                 for (let order of buyOrders) {
                     if (order.buyPrice === currentStockPrice) {
@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
                 }
 
                 // ✅ Auto-Sell if price matches
-                const sellOrders = await Position.find({ stockSymbol, sellStatus: true });
+                const sellOrders = await SellPosition.find({stockSymbol, sellStatus: 'executed'}); //type 'sell'
                 for (let order of sellOrders) {
                     if (currentStockPrice >= order.sellPrice) {
                         const profit = (order.sellPrice - order.buyPrice) * order.quantity;
@@ -89,7 +89,12 @@ io.on('connection', (socket) => {
                         });
 
                         await history.save();
-                        await Position.findByIdAndDelete(order._id);
+
+                        const sell = await SellPosition.findById(order._id);
+                        if(sell){
+                            sell.sellStatus = 'closed';
+                            await sell.save();
+                        }
 
                         const user = await User.findById(order.userId);
                         await User.findByIdAndUpdate(user._id,

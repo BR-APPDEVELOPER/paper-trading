@@ -1,5 +1,6 @@
-const Position = require('../models/Position');
 const History = require('../models/History');
+const User = require('../models/user');
+const {Position, BuyPosition, SellPosition } = require('../models/Position');
 
 
 const buy = async (req, res) => {
@@ -11,17 +12,21 @@ const buy = async (req, res) => {
             status = 'executed';
         }
 
-        const position = new Position({
-            userId,
-            stockSymbol,
-            buyPrice,
-            quantity,
-            status,
-        });
+         const position = new BuyPosition({
+             type:"buy",
+             userId,
+             stockSymbol,
+             buyPrice,
+             quantity,
+             status,
+         });
 
         await position.save();
-        res.json({success:true, message: 'Order placed successfully', position });
+
+        res.json({success:true, message: 'Order placed successfully', position});
     } catch (err) {
+        console.log(err.message);
+        
         res.status(500).json({success:false, error: err.message });
     }
 };
@@ -32,15 +37,25 @@ const sell = async (req, res) => {
 
     try {
         
-        const position = await Position.findOne({ userId, stockSymbol, status: 'executed' });
+        const position = await BuyPosition.findOne({userId, stockSymbol, status: 'executed' });
         
         if (!position) {
-            return res.json({ message: 'No executed stock found to sell' });
+            return res.json({success:false, message: 'No executed stock found to sell' });
         }
 
         if (sellPrice <= marketPrice) {
             // Sell immediately
-            await Position.findOneAndDelete({ _id: position._id });
+            const sellPosition = new SellPosition({
+                type: "sell",
+                userId,
+                stockSymbol,
+                buyPrice: position.buyPrice,
+                sellPrice,
+                quantity: position.quantity,
+                sellStatus: 'closed',
+            });
+
+            await sellPosition.save();
 
             const profit = (sellPrice - position.buyPrice) * position.quantity;
 
@@ -54,16 +69,32 @@ const sell = async (req, res) => {
             });
 
             await history.save();
-            return res.json({ message: 'Stock sold successfully', history });
+
+            const user = await User.findById(userId);
+            if(user){
+                user.balance = user.balance + (position.buyPrice * position.quantity) + profit;
+                await user.save();
+            }
+
+            return res.json({success:true, message: 'Stock sold successfully', history, user});
         } else {
             // If price is not reached, mark status as "waiting_to_sell"
-            position.sellStatus = true;
-            position.sellPrice = sellPrice;
-            await position.save();
-            return res.json({ message: 'Sell order placed, waiting for price to reach' });
+            const sell = new SellPosition({
+                type: "sell",
+                userId,
+                stockSymbol,
+                buyPrice: position.buyPrice,
+                sellPrice,
+                quantity: position.quantity,
+                sellStatus: "executed",
+            });
+
+            await sell.save();
+            return res.json({success:true, message: 'Sell order placed, waiting for price to reach' });
         }
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err.message);
+        res.status(500).json({success:false, message: err.message });
     }
 };
 
@@ -77,7 +108,7 @@ const getPositions = async (req, res)=>{
 
         return res.status(200).json({positions});
     } catch (error) {
-        console.log("Error getting positions",error.message);
+        console.log("Error getting in getPositions: ", error.message);
         
     }
 };
@@ -115,4 +146,26 @@ const removeStockFromPositions = async (req, res) => {
     }
 };
 
-module.exports = {buy, sell, getPositions, removeStockFromPositions, getHistory};
+const modifyPriceAndQty = async(req, res)=>{
+    const {modifiedPrice, modifiedQty} = req.body;
+    const id = req.params.id;
+
+    try {
+        const modified = await Position.findByIdAndUpdate(
+            id,
+            {
+                $set: {buyPrice: modifiedPrice,
+                quantity: modifiedQty}
+            });
+        
+            if(!modified){
+                res.status(200).json({success:false, message:"Error"});        
+            }
+
+            res.status(200).json({success:true, message:"Successfully Modified"});
+    } catch (error) {
+        res.status(400).json({success:false, message:"Error"});
+    }
+};
+
+module.exports = {buy, sell, getPositions, removeStockFromPositions, getHistory, modifyPriceAndQty};

@@ -50,22 +50,22 @@ body {
 
 .container {
   display: flex;
-  padding: 10px;
+  padding: 5px;
   flex: 1;
 }
 
 .watchlists {
   display: flex;
   flex-direction: column;
-  width: 30%;
-  margin-right: 10px;
+  width: fit-content;
+  margin-right: 8px;
 }
 
-.stock-data {
+/* .stock-data {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
   width: 70%;
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+} */

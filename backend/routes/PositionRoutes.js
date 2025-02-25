@@ -1,5 +1,5 @@
 const express = require('express');
-const {buy, sell, getPositions, removeStockFromPositions, getHistory} = require('../controllers/PositionController')
+const {buy, sell, getPositions, removeStockFromPositions, getHistory, modifyPriceAndQty} = require('../controllers/PositionController')
 
 
 const router = express.Router();
@@ -10,6 +10,7 @@ router.post('/sell', sell);
 router.get('/get/:id', getPositions);
 router.get('/history/get/:id', getHistory);
 router.delete('/remove/:id', removeStockFromPositions);
+router.patch('/modify/:id', modifyPriceAndQty);
 // ✅ Get User Watchlist
 //router.get('/get/:userId', getWatchlist);
 

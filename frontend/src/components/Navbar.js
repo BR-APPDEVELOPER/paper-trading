@@ -67,7 +67,7 @@ const Navbar = ({ onSearch }) => {
             </ul>
             <div className='profile'>
                 <label>Name: {user.username}</label><br></br>
-                <label>Bal: {user.balance}</label>
+                <label>Bal: {user.balance.toFixed(2)}</label>
 
             </div>
         </nav>

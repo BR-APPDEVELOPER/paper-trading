@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Positions from './Positions';
+import Orders from './Orders';
 
 function Home() {
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -20,6 +21,8 @@ function Home() {
 
   async function getPositions() {
     try {
+       console.log("1",symbol);
+      
       const res = await axios.get(`${process.env.REACT_APP_WEB_URL}/api/position/get/${user._id}`);
       setPositions(res.data.positions);
 
@@ -50,11 +53,12 @@ function Home() {
         <div className="watchlists">
 
           <Watchlist title="Watchlist 1" selectedStock={setSymbol} getWatchlist={getWatchlist} watchlists={watchlists}/>
-          <Positions title="Position" selectedStock={setSymbol} getPositions={getPositions} positions={positions} />
-
+          <Orders title="Orders" selectedStock={setSymbol} getPositions={getPositions} positions={positions} />
         </div>
-
-        <StockData newSymbol={symbol} defaultSymbol="TATAMOTORS" getWatchlist={getWatchlist}/>
+        {/*{console.log("2",symbol)}*/}
+        <StockData newSymbol={symbol} defaultSymbol="TATAMOTORS" getWatchlist={getWatchlist} getPositions={getPositions}/>
+        <Positions title="Position" selectedStock={setSymbol} getPositions={getPositions} positions={positions} />
+        
       </div>
     </div>
   );
