@@ -189,7 +189,8 @@ const modifyPriceAndQty = async (req, res) => {
                 {
                     $set: {
                         buyPrice: modifiedPrice,
-                        quantity: modifiedQty
+                        quantity: modifiedQty,
+                        remainingQuantity: modifiedQty
                     }
                 });
         } else {
