@@ -41,7 +41,7 @@ function Login() {
                 setTimeout(() => {
                     navigate('/home', { state: { email: email } });
                 }, 1000);
-                
+
 
             } else {
                 alert("Error", res.data.message);
@@ -62,7 +62,8 @@ function Login() {
                 <input className='email-in' type='text' value={email} onChange={(e) => setEmail(e.target.value)} required /><br />
                 <label className='reg-label'>Password</label><br />
                 <input className='password-in' type='password' value={password} onChange={(e) => setPassword(e.target.value)} required /><br />
-                <button className="btn-login" type="submit">Login</button>
+                <button className="btn-login" type="submit">Login</button><br />
+                <label className="login-label" onClick={() => navigate('/register')}>Register Here?</label>
             </form>
         </div>
     );

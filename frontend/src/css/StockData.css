@@ -95,8 +95,6 @@
      margin: 0;
  }
 
-
-
  /* Price section */
  .stock-price {
      text-align: center;
@@ -219,15 +217,20 @@
      background-color: #474747;
      padding-left: 10px;
      border-radius: 3px;
-     border: 1px solid white;
+     border: 1px solid #757575;
      color: #FFFFFF;
+     outline: none;
+ }
+
+ .order-group input:focus {
+     border: 1px solid #fff;
  }
 
  .stock-container .amount {
-    display: grid;
-    color: white;
-    text-align: end;
-    margin-top: 5px;
+     display: grid;
+     color: white;
+     text-align: end;
+     margin-top: 5px;
  }
 
  .order-group button {

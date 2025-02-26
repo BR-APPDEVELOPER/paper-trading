@@ -33,15 +33,17 @@ const PositionSchema = new mongoose.Schema(
 const Position = mongoose.model('Position', PositionSchema);
 
 const BuyPositionSchema = new mongoose.Schema({
-    status: { type: String, enum: ['pending', 'executed'], required: true }
+    status: { type: String, enum: ['pending', 'executed', 'closed'], required: true },
+    remainingQuantity: { type: Number, required: true }
 });
 
 const SellPositionSchema = new mongoose.Schema({
     sellPrice: { type: Number, required: true },
-    sellStatus: { type: String, enum: ['pending', 'executed', 'closed'], required: true }
+    sellStatus: { type: String, enum: ['pending', 'executed'], required: true },
+    sellId: { type: mongoose.Schema.Types.ObjectId, required: true }
 });
 
-// Define discriminators
+//discriminators
 const BuyPosition = Position.discriminator("buy", BuyPositionSchema);
 const SellPosition = Position.discriminator("sell", SellPositionSchema);
 

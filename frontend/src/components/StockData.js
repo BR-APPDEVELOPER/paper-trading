@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import '../css/StockData.css';
 
-const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
+const StockData = ({ newSymbol, defaultSymbol, getWatchlist, getPositions }) => {
     const [data, setSymbolData] = useState([]);
     const [chartData, setChartData] = useState([]);
     const [symbol, setNewSymbol] = useState();
@@ -14,27 +14,27 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
     const user = JSON.parse(sessionStorage.getItem("user"));
 
     async function calculateRequiredAmount(e) {
-        
-        const qty = Number(e.target.value); // Ensure it's a number
+
+        const qty = Number(e.target.value);
         setQuantity(qty);
 
-        const amo = buyPrice * qty; // Use qty directly instead of quantity
+        const amo = buyPrice * qty;
         setRequiredAmount(amo);
     };
 
-    // ✅ Add Stock to Watchlist
+    //Add Stock to Watchlist
     async function addToWatchlist() {
         try {
             const res = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/watchlist/add`, {
                 userId: user._id,
                 //stockSymbol: symbol
                 stockSymbol: newSymbol || defaultSymbol
-                
+
             });
 
             if (res.data.success) {
-                alert("Added to Watchlist");
                 getWatchlist();
+                alert("Added to Watchlist");
             } else {
                 alert("Not Added to Watchlist");
             }
@@ -42,17 +42,6 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
             console.error('Error adding stock:', error);
         }
     };
-
-    // ✅ Get User Watchlist
-    // async function getWatchlist() {
-    //     try {
-    //         const res = await axios.get(`${process.env.REACT_APP_WEB_URL}/api/watchlist/get/${user._id}`);
-
-    //     } catch (error) {
-    //         console.error('Error fetching watchlist:', error);
-    //     }
-    // };
-
 
     const updateBalance = async () => {
         try {
@@ -66,10 +55,10 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
 
 
     const handleBuy = async () => {
-        if(user.balance < requiredAmount){
+        if (user.balance < requiredAmount) {
             alert("Warning: Your current balance is below the required amount.");
             return;
-        } else if(buyPrice === "" || quantity === ""  || buyPrice === 0 || quantity === 0){
+        } else if (buyPrice === "" || quantity === "" || buyPrice === 0 || quantity === 0) {
             alert("Warning: All fields are required.");
             return;
         }
@@ -100,20 +89,21 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
 
     const handleSell = async () => {
 
-        if(buyPrice === "" || quantity === ""  || buyPrice === 0 || quantity === 0){
+        if (buyPrice === "" || quantity === "" || buyPrice === 0 || quantity === 0) {
             alert("Warning: All fields are required.");
             return;
         }
 
         try {
             const response = await axios.post(`${process.env.REACT_APP_WEB_URL}/api/position/sell`, {
-                userId: user._id, // Replace with actual user ID
+                userId: user._id,
                 stockSymbol: newSymbol || defaultSymbol,
                 sellPrice: Number(buyPrice),
-                marketPrice: Number(data.regularMarketPrice)
+                marketPrice: Number(data.regularMarketPrice),
+                quantity
             });
-            
-            if(response.data.success && response.data.user){
+
+            if (response.data.success && response.data.user) {
                 getPositions();
                 user.balance = response.data.user?.balance;
                 sessionStorage.setItem("user", JSON.stringify(user));
@@ -121,16 +111,16 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
                 setBuyPrice('');
                 setQuantity('');
 
-            }else if(response.data.success && !response.data.user){
+            } else if (response.data.success && !response.data.user) {
                 getPositions();
                 alert(response.data.message);
                 setBuyPrice('');
                 setQuantity('');
-            } else{
+            } else {
                 alert(response.data.message);
             }
-            
-            
+
+
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -140,7 +130,7 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
         const symbolToFetch = newSymbol || defaultSymbol; // Use newSymbol if available, otherwise defaultSymbol
         setNewSymbol(symbolToFetch);
         console.log(newSymbol, "s:", defaultSymbol);
-        
+
 
         const fetchStockData = async () => {
             if (!symbolToFetch) return; // Avoid fetching if no symbol is available
@@ -169,17 +159,17 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
             }
         };
 
-        // ✅ Fetch data every 1 second
+        //Fetch data every 1 second
         const intervalId = setInterval(() => {
             fetchStockData();
         }, 1000); // 1000ms = 1s
 
-        // ✅ Cleanup interval when component unmounts or newSymbol/defaultSymbol changes
+        //Cleanup interval when component unmounts or newSymbol/defaultSymbol changes
         return () => clearInterval(intervalId);
-    }, [newSymbol, defaultSymbol]); // Depend on newSymbol and defaultSymbol
+    }, [newSymbol, defaultSymbol]); //Depend on newSymbol and defaultSymbol
 
     useEffect(() => {
-        if (!data) return; // Ensure data exists before calculating
+        if (!data) return; //Ensure data exists before calculating
 
         const previousClose = data.chartPreviousClose || 0;
         const marketPrice = data.regularMarketPrice || 0;
@@ -189,7 +179,7 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
         setPriceChange(priceChange);
         setPercentageChange(percentageChange);
 
-    }, [data]); // Run whenever `data` changes
+    }, [data]); // Run whenever data changes
 
     return (
 
@@ -199,8 +189,6 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
                 <span className='equity'>{data.instrumentType}</span>
                 <button className='btn-watchlist' onClick={addToWatchlist}>Add to watchlist</button>
             </div>
-
-
 
             <div className="stock-header">
                 <h1>{data.longName}</h1>
@@ -259,7 +247,6 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
                         <span className="value">₹{data.fiftyTwoWeekLow}</span>
                     </div>
 
-
                 </div>
 
             </div>
@@ -273,8 +260,8 @@ const StockData = ({newSymbol, defaultSymbol, getWatchlist, getPositions}) => {
                 <button className="sell-btn" onClick={() => handleSell()}>Sell</button>
             </div>
             <div className='amount'>
-                    <span>Margin Avail: {user.balance.toFixed(2)}</span>
-                    <span>Req: {requiredAmount || 0}</span>
+                <span>Margin Avail: {user.balance.toFixed(2)}</span>
+                <span>Req: {requiredAmount?.toFixed(2) || 0}</span>
             </div>
             {/* <Chart /> */}
         </div>

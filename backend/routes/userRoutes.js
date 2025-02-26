@@ -1,8 +1,9 @@
 const express = require('express');
-const { createUser, loginUser, updateBalance, getUserData, getStockData} = require('../controllers/userController');
+const { createUser, loginUser, updateBalance, getUserData, getStockData } = require('../controllers/userController');
 
 const router = express.Router();
 
+// Base router '/api'
 //user request
 router.post('/users/signup', createUser);
 router.post('/users/login', loginUser);

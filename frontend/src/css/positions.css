@@ -12,7 +12,7 @@
 
 .positions-data {
     overflow-y: scroll;
-    height: 89vh;
+    height: 89.5%;
     padding: 5px;
 }
 
@@ -56,36 +56,26 @@
     width: 100%;
 }
 
-.details .edit-price {
-    position: absolute;
-    right: 5px;
-    width: 20px;
-}
-
 .position-item .status {
     background-color: #333333e3;
     padding: 1px 5px;
     font-size: 12px;
 }
 
-.position-item .buy-price, .buy-qty{
+.position-item .buy-price,
+.buy-qty {
     top: 0;
     background-color: #333333e3;
     padding: 1px 5px;
     font-size: 12px;
 }
 
-.position-item .edit-price:hover {
-    background-color: #068a74;
+.buy-status {
+    background-color: #333333e3;
+    padding: 1px 5px;
+    font-size: 12px;
+    right: 5px;
 }
-
-/* .executed-color {
-    background: #0899812f;
-}
-
-.pending-color {
-    background: #fa2f4038;
-} */
 
 .btn-executed-color {
     background: #089981;
@@ -114,87 +104,4 @@
 
 .position-item .btn-executed-color:hover {
     background-color: #068a74;
-}
-
-
-/* ModifyAMount.js */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    font-family: "Arial", sans-serif;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dialog {
-    background: white;
-    padding: 20px;
-    border-radius: 2px;
-    width: 300px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.dialog h2{
-    color: black;
-    text-align: center;
-}
-
-.dialog label:first-of-type{
-    color: black;
-    margin-top: 10px;
-    display: flex;
-    font-size: 18px;
-    margin-bottom: 3px;
-    
-}
-
-.dialog label:last-of-type{
-    color: black;
-    display: flex;
-    font-size: 18px;
-    margin-bottom: 3px;
-    
-}
-
-.dialog input {
-    width: 94%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    outline: none;
-    font-size: 15px;
-}
-
-.dialog input:focus{
-    border: 2px solid #333333;
-}
-
-.dialog .buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.dialog button {
-    padding: 6px 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    border-radius: 2px;
-}
-
-.dialog button:first-child {
-    
-    color: white;
-    background: #f23645;
-}
-
-.dialog button:last-child {
-    background: #089981;
-    color: white;
 }

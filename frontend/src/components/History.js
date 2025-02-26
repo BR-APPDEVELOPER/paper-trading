@@ -1,6 +1,6 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../css/History.css"; // Import the CSS file
+import "../css/History.css";
 
 const History = () => {
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -16,10 +16,10 @@ const History = () => {
 
         }
     };
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         getHistory();
-    },[]);
+    }, []);
 
     return (
         <div className="history-container">
@@ -44,7 +44,7 @@ const History = () => {
                                 <td>{item.sellPrice}</td>
                                 <td>{item.quantity}</td>
                                 <td className={item.profit >= 0 ? "profit" : "loss"}>
-                                    {item.profit >= 0 ? `+₹${item.profit}` : `-₹${Math.abs(item.profit)}`}
+                                    {item.profit >= 0 ? `+₹${item.profit.toFixed(4)}` : `-₹${Math.abs(item.profit.toFixed(4))}`}
                                 </td>
                                 <td>{new Date(item.createdAt).toLocaleString()}</td>
                             </tr>

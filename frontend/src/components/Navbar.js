@@ -16,29 +16,30 @@ const Navbar = ({ onSearch }) => {
     const handleSearch = () => {
         if (search.trim() !== '') {
             onSearch(search); // Send search term to the parent
-            setSearch(''); // Clear input after search
+            setSearch('');
         }
     };
 
-    
+
 
     function logout() {
+        navigate('/');
         sessionStorage.removeItem("user");
         sessionStorage.removeItem("userEmail");
         localStorage.removeItem("token");
-    
+
         sessionStorage.clear();
         localStorage.clear();
-    
-        setTimeout(() => {
-            navigate('/login');
-        }, 100);
+
+        // setTimeout(() => {
+        //     navigate('/');
+        // }, 100);
     }
-    
+
 
     useEffect(() => {
         if (email === null) {
-            navigate("/login"); // Redirect to login if no user
+            navigate("/"); // Redirect to login if no user
         }
     }, []);
 
@@ -52,23 +53,22 @@ const Navbar = ({ onSearch }) => {
 
     return (
         <nav className="navbar">
-            
+
             <img className='logo' src={logo} alt='Logo'></img>
             <label className='name'>Paper Trading</label>
-            <input type='text' className='search' placeholder='Search' value={search} onChange={(e)=>setSearch(e.target.value)}></input>
+            <input type='text' className='search' placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)}></input>
             <button className='btn-search' onClick={handleSearch}>Search</button>
             <label className='market-time' >{time.toLocaleString()}</label>
             <ul>
                 {/* <li><a href="#home">Home</a></li>
                 <li><a href="#contact">Contact Us</a></li>*/}
-                <li><a href="/history">History</a></li> 
+                <li><a href="/history">History</a></li>
                 <li><button onClick={logout}>Logout</button></li>
 
             </ul>
             <div className='profile'>
                 <label>Name: {user.username}</label><br></br>
                 <label>Bal: {user.balance.toFixed(2)}</label>
-
             </div>
         </nav>
     );

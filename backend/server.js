@@ -8,7 +8,7 @@ const axios = require('axios');
 
 dotenv.config();
 const connectDB = require('./config/db');
-const {BuyPosition, SellPosition} = require('./models/Position');
+const { BuyPosition, SellPosition } = require('./models/Position');
 const History = require('./models/History');
 const User = require('./models/user');
 const userRoutes = require('./routes/userRoutes');
@@ -26,20 +26,20 @@ app.use('/api/watchlist', watchlistRoutes);
 app.use('/api/position', positionRoutes);
 
 //for backend working test
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.send("<h1>Paper Trading. Your server is Live</h1>");
 });
 
 const server = http.createServer(app);
 const io = socketIo(server, { cors: { origin: '*' } });
 
+// Get the latest stock price
 const fetchStockPrice = async (symbol) => {
     try {
         const response = await axios.get(
             `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}.NS`
         );
 
-        // Extract the latest stock price
         return response.data.chart.result[0].meta.regularMarketPrice || null;
     } catch (error) {
         console.error(`Error fetching stock price for ${symbol}:`, error.message);
@@ -62,9 +62,9 @@ io.on('connection', (socket) => {
                     continue;
                 }
 
-                // ✅ Auto-Buy if price matches
-                const buyOrders = await BuyPosition.find({stockSymbol, status: 'pending'}); //type 'buy'
-                
+                // Auto Buy if price matches
+                const buyOrders = await BuyPosition.find({ stockSymbol, status: 'pending' }); //type 'buy'
+
                 for (let order of buyOrders) {
                     if (order.buyPrice === currentStockPrice) {
                         order.status = 'executed';
@@ -73,8 +73,8 @@ io.on('connection', (socket) => {
                     }
                 }
 
-                // ✅ Auto-Sell if price matches
-                const sellOrders = await SellPosition.find({stockSymbol, sellStatus: 'executed'}); //type 'sell'
+                // Auto Sell if price matches
+                const sellOrders = await SellPosition.find({ stockSymbol, sellStatus: 'pending' }); //type 'sell'
                 for (let order of sellOrders) {
                     if (currentStockPrice >= order.sellPrice) {
                         const profit = (order.sellPrice - order.buyPrice) * order.quantity;
@@ -90,25 +90,38 @@ io.on('connection', (socket) => {
 
                         await history.save();
 
+                        //const buy = await BuyPosition.findOne({userId: order.userId, stockSymbol, status: 'executed'});
+                        const buy = await BuyPosition.findById(order.sellId);
+                        if (buy) {
+
+                            if (buy.remainingQuantity === order.quantity) {
+                                buy.status = 'closed';
+                            } else {
+                                buy.remainingQuantity = (buy.remainingQuantity - order.quantity);
+                            }
+
+                            await buy.save();
+                        }
+
                         const sell = await SellPosition.findById(order._id);
-                        if(sell){
-                            sell.sellStatus = 'closed';
+                        if (sell) {
+                            sell.sellStatus = 'executed';
                             await sell.save();
                         }
 
                         const user = await User.findById(order.userId);
                         await User.findByIdAndUpdate(user._id,
-                            {$set:{balance: (user.balance + profit)}}
+                            { $set: { balance: (user.balance + profit) } }
                         );
 
-                        io.emit('orderUpdated', { userId: order.userId, stockSymbol, status: 'Sell order executed', profit, balance: user.balance + profit});
+                        io.emit('orderUpdated', { userId: order.userId, stockSymbol, status: 'Sell order executed', profit, balance: user.balance + profit });
                     }
                 }
             }
         } catch (error) {
             console.error("Error updating stock prices:", error.message);
         }
-        
+
     }, 5000); // Runs every 5 seconds
 
     socket.on('disconnect', () => {

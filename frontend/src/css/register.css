@@ -1,10 +1,10 @@
-.main-div{
+.main-div {
     background-color: #1E1E1E;
     width: 100vw;
     height: 100vh;
 }
 
-h2{
+h2 {
     color: #021e41;
 }
 
@@ -20,7 +20,9 @@ h2{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.name-in, .email-in, .password-in{
+.name-in,
+.email-in,
+.password-in {
     margin-bottom: 5px;
     width: 300px;
     height: 30px;
@@ -29,7 +31,8 @@ h2{
     border: solid gray 2px;
 }
 
-.btn-reg, .btn-login{
+.btn-reg,
+.btn-login {
     width: 310px;
     height: 40px;
     margin-top: 10px;
@@ -40,11 +43,11 @@ h2{
     margin-bottom: 10px;
 }
 
-.reg-label{
-color: gray;
+.reg-label {
+    color: gray;
 }
 
-.login-label{
+.login-label {
     color: #1E1E1E;
     cursor: pointer;
 }

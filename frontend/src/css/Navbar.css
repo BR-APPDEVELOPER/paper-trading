@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #121212; /* Bootstrap primary color */
+    background-color: #121212;
     color: white;
     padding: 10px 20px;
     height: 30px;
@@ -10,8 +10,7 @@
     box-shadow: 2px 3px 5px rgba(255, 255, 255, 0.3);
 }
 
-
-.market-time{
+.market-time {
     position: absolute;
     margin-top: 5px;
     margin-left: 250px;
@@ -27,31 +26,33 @@
     gap: 20px;
 }
 
-.navbar .profile{
+.navbar .profile {
     position: absolute;
     right: 30px;
     margin-top: -5px;
 }
 
-.navbar li{
+.navbar li {
     line-height: 30px;
 }
 
-.navbar a,.navbar button {
+.navbar a,
+.navbar button {
     font-size: 16px;
-        color: white;
-        text-decoration: none;
-        padding: 5px 20px;
-        border: none;
-        background: none;
-        cursor: pointer;
+    color: white;
+    text-decoration: none;
+    padding: 5px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
-.navbar a:hover, .navbar button:hover {
+.navbar a:hover,
+.navbar button:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.search{
+.search {
     text-transform: uppercase;
     width: 200px;
     height: 25px;
@@ -63,9 +64,11 @@
     font-weight: 600;
     background-color: #474747;
     color: #fff;
+    outline: none;
+
 }
 
-.navbar .btn-search{
+.navbar .btn-search {
     height: 25px;
     position: absolute;
     border-radius: 3px;
@@ -78,13 +81,17 @@
     color: rgb(99, 99, 99);
 }
 
-.navbar .logo{
+.navbar .btn-search:hover {
+    background-color: #fffffff1;
+}
+
+.navbar .logo {
     width: 45px;
     border-radius: 2px;
     position: absolute;
 }
 
-.navbar .name{
+.navbar .name {
     width: fit-content;
     position: absolute;
     margin-top: 5px;

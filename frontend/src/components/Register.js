@@ -21,7 +21,7 @@ function Register() {
 
             if (response.data.success) {
                 alert("Signup successful! Please log in.");
-                navigate('/login');   // Redirect to login page after successful signup
+                navigate('/');   // Redirect to login page after successful signup
             } else {
                 alert(response.data.message || "Signup failed. Please try again.");
             }
@@ -35,18 +35,18 @@ function Register() {
     return (
         <div className='main-div'>
             <div className='form-div'>
-            <h2>Register</h2>
-            <line></line>
-            <hr />
+                <h2>Register</h2>
+                <line></line>
+                <hr />
                 <form onSubmit={handleSignup}>
                     <label className='reg-label'>Name</label><br />
-                    <input className='name-in' type='text'  value={username} onChange={(e) => setName(e.target.value)} required /><br />
+                    <input className='name-in' type='text' value={username} onChange={(e) => setName(e.target.value)} required /><br />
                     <label className='reg-label' >Email</label><br />
-                    <input className='email-in' type='text'  value={email} onChange={(e) => setEmail(e.target.value)} required /><br />
+                    <input className='email-in' type='text' value={email} onChange={(e) => setEmail(e.target.value)} required /><br />
                     <label className='reg-label'>Password</label><br />
-                    <input className='password-in' type='password'  value={password} onChange={(e) => setPassword(e.target.value)} required /><br />
-                    <button className='btn-reg' type='submit'>Register</button><br/>
-                    <label className='login-label' onClick={()=>navigate('/login')}>Already member? Login</label>
+                    <input className='password-in' type='password' value={password} onChange={(e) => setPassword(e.target.value)} required /><br />
+                    <button className='btn-reg' type='submit'>Register</button><br />
+                    <label className='login-label' onClick={() => navigate('/')}>Already member? Login</label>
                 </form>
             </div>
         </div>

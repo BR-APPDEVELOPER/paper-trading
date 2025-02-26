@@ -1,6 +1,6 @@
 const Watchlist = require('../models/Watchlist');
 
-// ✅ Add Stock to Watchlist
+//Add Stock to Watchlist
 const addToWatchlist = async (req, res) => {
     const { userId, stockSymbol } = req.body;
 
@@ -16,28 +16,28 @@ const addToWatchlist = async (req, res) => {
         }
 
         await watchlist.save();
-        res.status(200).json({success:true, message: 'Stock added to watchlist', watchlist });
+        res.status(200).json({ success: true, message: 'Stock added to watchlist', watchlist });
     } catch (error) {
-        res.status(500).json({success:false, error: error.message });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
-// ✅ Get User Watchlist
+// Get User Watchlist
 const getWatchlist = async (req, res) => {
     try {
         const watchlist = await Watchlist.findOne({ userId: req.params.userId });
 
         if (!watchlist) {
-            return res.status(404).json({success:false, message: 'No watchlist found' });
+            return res.status(404).json({ success: false, message: 'No watchlist found' });
         }
 
-        res.status(200).json({success:true, watchlist});
+        res.status(200).json({ success: true, watchlist });
     } catch (error) {
-        res.status(500).json({success:false, error: error.message });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
-// ✅ Remove Stock from Watchlist
+//Remove Stock from Watchlist
 const removeFromWatchlist = async (req, res) => {
     const { userId, stockSymbol } = req.body;
 
@@ -57,4 +57,4 @@ const removeFromWatchlist = async (req, res) => {
     }
 };
 
-module.exports = {addToWatchlist, getWatchlist, removeFromWatchlist};
+module.exports = { addToWatchlist, getWatchlist, removeFromWatchlist };

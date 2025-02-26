@@ -18,7 +18,6 @@ const createUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = await User.create({ username, email, password: hashedPassword });
 
-        // Return success response
         res.status(201).json({ success: true, message: 'User created successfully', user: newUser });
     } catch (error) {
         console.error('Error creating user:', error);
@@ -44,7 +43,7 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({ userId: user._id }, "hi_da", { expiresIn: "2h" });
         res.status(200).json({ success: true, message: "Login in success", token, user });
     } catch (error) {
-        console.error("Error in login", error);
+        console.error("Error in login", error.message);
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
@@ -71,15 +70,13 @@ const getStockData = async (req, res) => {
             return res.status(400).json({ error: "Stock symbol is required" });
         }
 
-        //console.log("Fetching data for:", symbol);
-
         const response = await axios.get(
             `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}.NS`,
         );
         // const response = await axios.get(
         //     `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}.NS?interval=1d&range=1mo`,
         // );
-        // console.log("Response received:", response.data);
+
         res.json(response.data);
     } catch (error) {
         console.error("Error fetching stock data:", error.message);
@@ -94,10 +91,11 @@ const updateBalance = async (req, res) => {
     try {
         const updated = await User.findByIdAndUpdate(id,
             { $set: { balance } });
-        
-            return res.status(200).json({message:"Balance updated"});
+
+        return res.status(200).json({ message: "Balance updated" });
     } catch (error) {
 
     }
-}
+};
+
 module.exports = { createUser, loginUser, getUserData, getStockData, updateBalance };

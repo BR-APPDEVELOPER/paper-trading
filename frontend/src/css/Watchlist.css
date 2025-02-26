@@ -10,11 +10,13 @@
     color: #E0E0E0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.watchlist-data{
+
+.watchlist-data {
     overflow-y: scroll;
-    height: 37vh;
+    height: 27.6vh;
     padding: 15px;
 }
+
 .watchlist h2 {
     margin: 0 5px 0px 5px;
     font-size: 20px;
@@ -29,13 +31,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 5px 10px 10px; /*TRBL*/
+    padding: 10px 5px 10px 10px;
+    /*TRBL*/
     border-bottom: 1px solid #bdbdbd9a;
     cursor: pointer;
     border-radius: 4px;
 }
 
-.stock-item:hover{
+.stock-item:hover {
     background-color: rgba(226, 226, 226, 0.589);
 }
 
