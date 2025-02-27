@@ -33,7 +33,7 @@ This project was deployed in Render [Live Demo](https://paper-trading-raj.onrend
 Follow these steps to set up and run the project locally:  
 
 1️⃣ **Clone the Repository**  
-
-```bash
 git clone https://github.com/your-username/paper-trading.git
 cd paper-trading
+
+
